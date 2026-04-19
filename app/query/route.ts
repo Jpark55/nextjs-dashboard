@@ -26,12 +26,14 @@
 // }
 
 import { MongoClient } from 'mongodb';
+import clientPromise from '@/lib/mongodb';
 
-const client = new MongoClient(process.env.MONGODB_URI!);
+// const client = new MongoClient(process.env.MONGODB_URI!);
+const client = await clientPromise;
 
 async function listInvoices() {
   await client.connect();
-  const db = client.db(); // Uses the database name from your URI
+  const db = client.db("dashboard"); // Uses the database name from your URI
 
   const data = await db.collection('invoices').aggregate([
     {
